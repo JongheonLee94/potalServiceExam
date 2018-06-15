@@ -9,8 +9,5 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/user/**");
-        registry.addViewController("/user/member/**");
-        registry.addViewController("/board/**");
     }
-
 }

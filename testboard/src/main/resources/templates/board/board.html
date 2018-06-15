@@ -15,7 +15,7 @@
 </div>
 <div id="Content">
     <table>
-        <caption>사용목록</caption>
+        <caption>게시글</caption>
         <thead>
 
         </thead>
@@ -30,12 +30,11 @@
             $.each(userList, function (index, value) {
                 $("tbody").append(
                     '\
-                    <tr> \
-                    <td>' + value.id + '</td> \
-                    <td><a href="board">' + value.name + '</a></td> \
-                    <td><a href="#" class="modify" data=' + value.id + '>수정</a></td> \
-                    <td><a href="#" class="remove" data=' + value.id + '>삭제</a></td> \
-                    </tr>\
+                    <ul> \
+                    <li><h4>' + value.name + '</h4></li> \
+                    <li>' + value.contents + '</li> \
+                    <li><a href="#" class="modify" data=' + value.id + '>수정</a>/<a href="#" class="remove" data=\' + value.id + \'>삭제</a></> </li> \
+                    </ul>\
                     ');
             });
             $(".modify").on("click", function (e) {

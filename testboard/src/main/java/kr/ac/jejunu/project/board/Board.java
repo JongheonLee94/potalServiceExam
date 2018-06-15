@@ -1,11 +1,9 @@
 package kr.ac.jejunu.project.board;
 
+import kr.ac.jejunu.project.Member;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Data
@@ -15,7 +13,10 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     String name;
-    String content;
+    String contents;
     Long memberId;
+//    @ManyToOne(targetEntity=Member.class, fetch=FetchType.LAZY)
+//    @JoinColumn(name="member_id")
+//    Member member;
     String filePath;
 }

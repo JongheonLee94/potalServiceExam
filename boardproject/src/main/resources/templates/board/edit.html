@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>사용자 관리</title>
+    <title>게시판</title>
     <link href="/menu.css" rel="stylesheet" type="text/css" media="all"/>
     <script src="/jquery.min.js"></script>
 </head>
@@ -11,27 +11,36 @@
 </div>
 <div id="Menu">
     <a href="list">목록보기</a><br/>
-    <a href="create">생성하기</a>
+    <a href="edit">생성하기</a>
 </div>
 <div id="Content">
     <input id="id" type="hidden" name="id"/>
     <fieldset>
-        <legend>사용자 등록</legend>
+        <legend>게시글 작성</legend>
         <p>
-            <label>이름</label>
+            <label>제목</label>
             <input id="name" name="name"/>
         </p>
         <p>
-            <label>암호</label>
-            <input id="password" type="password" name="password"/>
+       <label>작성자</label>
+            <input id="user_id" type="text" name="user_id"/>
+        </p>
+        <p>
+            <label>글내용</label>
+            <input id="contents" type="text" name="contents"/>
+        </p>
+        <p>
+            <label>첨부파일</label>
+            <input id="file_path"type="file" name="file_path"/>
         </p>
         <p>
             <input id="save" type="button" value="저장"/>
         </p>
+
     </fieldset>
 </div>
 <script>
-    var host = '/api/user';
+    var host = '/api/board';
 
     function getUrlParams() {
         var params = {};
@@ -45,7 +54,9 @@
         var user = {
             id: $('#id').val(),
             name: $('#name').val(),
-            password: $('#password').val()
+            contents: $('#contents').val(),
+            userId: $('#user_id').val(),
+            filePath : $('#file_path').val()
         };
         var method = 'POST';
         if(user.id)
@@ -69,10 +80,12 @@
     $(document).ready(function () {
         var params = getUrlParams();
         if (params.id) {
-            $.get(host + "/" + params.id, function (user) {
-                $('#id').val(user.id);
-                $('#name').val(user.name);
-                $('#password').val('');
+            $.get(host + "/" + params.id, function (contents) {
+                $('#id').val(contents.id);
+                $('#user_id').val(contents.userId);
+                $('#name').val(contents.name);
+                $('#contents').val(contents.contents);
+                $('#file_path').val(contents.filePath);
             });
         }
         $('#save').on("click", save);

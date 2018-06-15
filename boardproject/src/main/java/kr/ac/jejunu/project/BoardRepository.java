@@ -1,4 +1,4 @@
-package kr.ac.jejunu.board;
+package kr.ac.jejunu.project;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

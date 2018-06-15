@@ -1,0 +1,79 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+    <link href="/menu.css" rel="stylesheet" type="text/css" media="all"/>
+    <script src="/jquery.min.js"></script>
+</head>
+<body>
+<div id="Header">
+    사용자 관리
+</div>
+<div id="Menu">
+    <a href="list">목록보기</a><br/>
+    <a href="edit">생성하기</a>
+</div>
+<div id="Content">
+    <table>
+        <caption>게시글</caption>
+        <thead>
+
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <p id="id">n</p>
+    제목<h3 id="name">n</h3>
+    글쓴이 <p id="user_id">n</p>
+    <p id="contents">n</p>
+    파일참부<p id="file_path">n</p>
+</div>
+<script>
+    var host = '/api/board';
+    function getUrlParams() {
+        var params = {};
+        window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
+            params[key] = value;
+        });
+        return params;
+    }
+    $(document).ready(function () {
+        var params = getUrlParams();
+
+        if (params.id) {
+            $.get(host + "/" + params.id, function (contents) {
+                $('#id').text(""+contents.id);
+                $('#user_id').text(""+contents.userId);
+                $('#name').text(contents.name);
+                $('#contents').text(contents.contents);
+                $('#file_path').text(contents.filePath);
+            });
+        }
+        $('#save').on("click", save);
+    });
+
+    var host = '/api/board';
+    $(document).ready(function () {
+
+
+            $(".modify").on("click", function (e) {
+                var id = $(e.currentTarget).attr("data");
+                window.location.href = "edit?id=" + id;
+            });
+            $(".remove").on("click", function (e) {
+                var target = e.currentTarget;
+                var id = $(target).attr("data");
+                var row = $(target).parent().parent();
+                $.ajax({
+                    url: host + '/' + id,
+                    method: 'DELETE',
+                    success: function (result) {
+                        window.location.reload();
+                    }
+                });
+            });
+    });
+</script>
+</body>
+</html>
